@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تقديم فريق البرمجة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c14;
+    --surface: #111520;
+    --card: #161b2e;
+    --border: #1e2a4a;
+    --accent: #00c8ff;
+    --accent2: #7b2fff;
+    --gold: #f0a500;
+    --text: #e8eaf6;
+    --muted: #6b7db3;
+    --danger: #ff4d6d;
+    --success: #00e676;
+    --glow: 0 0 20px rgba(0,200,255,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 80% 10%, rgba(123,47,255,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 30% at 20% 80%, rgba(0,200,255,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeDown 0.7s ease both;
+  }
+
+  .server-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(0,200,255,0.1), rgba(123,47,255,0.1));
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 6px 20px;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .server-badge span { font-size: 18px; }
+
+  .header h1 {
+    font-size: clamp(28px, 5vw, 46px);
+    font-weight: 900;
+    line-height: 1.15;
+    background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .header p {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+    margin: 32px 0;
+    opacity: 0.4;
+  }
+
+  /* Editable notice */
+  .edit-notice {
+    background: linear-gradient(135deg, rgba(240,165,0,0.08), rgba(240,165,0,0.03));
+    border: 1px solid rgba(240,165,0,0.3);
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 13px;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.5s ease 0.3s both;
+  }
+
+  /* Section */
+  .section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease both;
+    transition: border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+    border-radius: 0 16px 16px 0;
+    opacity: 0.6;
+  }
+
+  .section:hover { border-color: rgba(0,200,255,0.25); }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .section-title .icon {
+    width: 34px;
+    height: 34px;
+    background: linear-gradient(135deg, rgba(0,200,255,0.15), rgba(123,47,255,0.15));
+    border: 1px solid rgba(0,200,255,0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  /* Fields */
+  .field {
+    margin-bottom: 20px;
+  }
+
+  .field:last-child { margin-bottom: 0; }
+
+  .field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .field label .required {
+    color: var(--danger);
+    margin-right: 3px;
+  }
+
+  .editable-label {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: text;
+    outline: none;
+    border-bottom: 1px dashed rgba(240,165,0,0.4);
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+    direction: rtl;
+  }
+
+  .editable-label:hover, .editable-label:focus {
+    border-bottom-color: var(--gold);
+    color: var(--gold);
+  }
+
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    direction: rtl;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,200,255,0.08);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.7;
+  }
+
+  select option {
+    background: var(--card);
+    color: var(--text);
+  }
+
+  /* Radio / Checkbox */
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .option-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+  }
+
+  .option-item:hover {
+    border-color: var(--accent);
+    background: rgba(0,200,255,0.04);
+  }
+
+  .option-item input { display: none; }
+
+  .option-item .dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .option-item input:checked ~ .text ~ .dot,
+  .option-item:has(input:checked) .dot {
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: 0 0 8px rgba(0,200,255,0.4);
+  }
+
+  .option-item:has(input:checked) {
+    border-color: var(--accent);
+    background: rgba(0,200,255,0.06);
+    color: var(--accent);
+  }
+
+  /* Scale */
+  .scale-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .scale-label { font-size: 12px; color: var(--muted); }
+
+  .scale-options { display: flex; gap: 8px; flex: 1; justify-content: space-between; }
+
+  .scale-btn {
+    flex: 1;
+    min-width: 36px;
+    height: 40px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .scale-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .scale-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+    box-shadow: 0 0 12px rgba(0,200,255,0.3);
+  }
+
+  /* Question management */
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .question-card:hover { border-color: rgba(0,200,255,0.2); }
+
+  .question-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .q-number {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #000;
+    flex-shrink: 0;
+  }
+
+  .q-controls { display: flex; gap: 8px; }
+
+  .btn-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .btn-icon:hover { border-color: var(--danger); color: var(--danger); background: rgba(255,77,109,0.08); }
+
+  .q-text-input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    outline: none;
+    direction: rtl;
+    transition: border-color 0.2s;
+  }
+
+  .q-text-input:focus { border-color: var(--accent); }
+
+  .q-type-select {
+    margin-top: 10px;
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+
+  .add-question-btn {
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    border: 1px dashed rgba(0,200,255,0.3);
+    border-radius: 12px;
+    color: var(--accent);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .add-question-btn:hover {
+    background: rgba(0,200,255,0.06);
+    border-color: var(--accent);
+    box-shadow: var(--glow);
+  }
+
+  /* Submit */
+  .submit-section {
+    text-align: center;
+    margin-top: 40px;
+    animation: fadeUp 0.7s ease 0.5s both;
+  }
+
+  .submit-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 16px 60px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 24px rgba(0,200,255,0.2);
+    letter-spacing: 0.5px;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,200,255,0.35);
+  }
+
+  .submit-btn:active { transform: translateY(0); }
+
+  /* Success modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    max-width: 420px;
+    width: 90%;
+    animation: scaleIn 0.3s ease;
+  }
+
+  .modal .check {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--success), #00b248);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 20px;
+    box-shadow: 0 0 24px rgba(0,230,118,0.3);
+  }
+
+  .modal h3 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+  .modal p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+  .modal-close {
+    margin-top: 24px;
+    padding: 12px 36px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .modal-close:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Progress bar */
+  .progress-bar {
+    position: fixed;
+    top: 0; right: 0; left: 0;
+    height: 3px;
+    background: var(--border);
+    z-index: 100;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.3s ease;
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .section:nth-child(1) { animation-delay: 0.1s; }
+  .section:nth-child(2) { animation-delay: 0.2s; }
+  .section:nth-child(3) { animation-delay: 0.3s; }
+  .section:nth-child(4) { animation-delay: 0.4s; }
+
+  @media (max-width: 600px) {
+    .options-grid { grid-template-columns: 1fr 1fr; }
+    .scale-btn { min-width: 28px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+</div>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="server-badge">
+      <span>🎮</span>
+      <span contenteditable="true" style="outline:none;">اسم السيرفر</span>
+    </div>
+    <h1 contenteditable="true" style="outline:none;">تقديم فريق البرمجة</h1>
+    <p contenteditable="true" style="outline:none;">
+      مرحباً بك في نموذج التقديم لوظيفة مبرمج في سيرفر FiveM. يرجى تعبئة جميع الحقول بدقة وصدق.
+    </p>
+  </div>
+
+  <div class="edit-notice">
+    ✏️ كل النصوص قابلة للتعديل — اضغط على أي نص أو عنوان لتغييره مباشرة
+  </div>
+
+  <!-- Section 1: معلومات شخصية -->
+  <div class="section">
+    <div class="section-title">
+      <div class="icon">👤</div>
+      <span contenteditable="true" style="outline:none;">المعلومات الشخصية</span>
+    </div>
+
+    <div class="field">
+      <label><span class="required">*</span> <input class="editable-label" value="الاسم في الديسكورد" /></label>
+      <input type="text" placeholder="مثال: Ahmed#1234" />
+    </div>
+
+    <div class="field">
+      <label><span class="required">*</span> <input class="editable-label" value="الاسم في اللعبة (FiveM)" /></label>
+      <input type="text" placeholder="اسمك داخل السيرفر" />
+    </div>
+
+    <div class="field">
+      <label><span class="required">*</span> <input class="editable-label" value="العمر" /></label>
+      <input type="number" placeholder="مثال: 20" min="13" max="50" />
+    </div>
+
+    <div class="field">
+      <label><input class="editable-label" value="الجنسية / الدولة" /></label>
+      <input type="text" placeholder="مثال: السعودية" />
+    </div>
+
+    <div class="field">
+      <label><span class="required">*</span> <input class="editable-label" value="ايدي الديسكورد (Discord ID)" /></label>
+      <div style="position:relative;">
+        <input type="text" id="discordIdInput" placeholder="مثال: 123456789012345678" style="padding-left:120px;" oninput="resetCopyBtn()" />
+        <button onclick="copyDiscordId()" id="copyDiscordBtn"
+          style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:7px;color:#fff;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;transition:all 0.2s;white-space:nowrap;">
+          📋 نسخ الايدي
+        </button>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-top:7px;">
+        📌 للحصول على ايدي ديسكوردك: الإعدادات ← خيارات متقدمة ← فعّل وضع المطور ← اضغط على اسمك بالزر الأيمن ← نسخ المعرف
+      </p>
+    </div>
+  </div>
+
+  <!-- Section 2: الخبرة البرمجية -->
+  <div class="section">
+    <div class="section-title">
+      <div class="icon">💻</div>
+      <span contenteditable="true" style="outline:none;">الخبرة البرمجية</span>
+    </div>
+
+    <div class="field">
+      <label><span class="required">*</span> <input class="editable-label" value="كم سنة خبرتك في البرمجة؟" /></label>
+      <div class="options-grid">
+        <label class="option-item">
+          <input type="radio" name="exp" value="اقل من سنة" />
+          <span class="text">أقل من سنة</span>
+          <div class="dot"></div>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="exp" value="1-2 سنة" />
+          <span class="text">١ - ٢ سنة</span>
+          <div class="dot"></div>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="exp" value="2-4 سنة" />
+          <span class="text">٢ - ٤ سنوات</span>
+          <div class="dot"></div>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="exp" value="+4 سنوات" />
+          <span class="text">٤+ سنوات</span>
+          <div class="dot"></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label><span class="required">*</span> <input class="editable-label" value="اللغات البرمجية التي تتقنها" /></label>
+      <div class="options-grid">
+        <label class="option-item">
+          <input type="checkbox" name="lang" />
+          <span class="text">Lua</span>
+          <div class="dot" style="border-radius:4px;"></div>
+        </label>
+        <label class="option-item">
+          <input type="checkbox" name="lang" />
+          <span class="text">JavaScript</span>
+          <div class="dot" style="border-radius:4px;"></div>
+        </label>
+        <label class="option-item">
+          <input type="checkbox" name="lang" />
+          <span class="text">C#</span>
+          <div class="dot" style="border-radius:4px;"></div>
+        </label>
+        <label class="option-item">
+          <input type="checkbox" name="lang" />
+          <span class="text">HTML / CSS</span>
+          <div class="dot" style="border-radius:4px;"></div>
+        </label>
+        <label class="option-item">
+          <input type="checkbox" name="lang" />
+          <span class="text">SQL</span>
+          <div class="dot" style="border-radius:4px;"></div>
+        </label>
+        <label class="option-item">
+          <input type="checkbox" name="lang" />
+          <span class="text">Python</span>
+          <div class="dot" style="border-radius:4px;"></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label><span class="required">*</span> <input class="editable-label" value="هل سبق وعملت على سيرفرات FiveM؟" /></label>
+      <div class="options-grid">
+        <label class="option-item">
+          <input type="radio" name="fivem_exp" />
+          <span class="text">نعم، خبرة واسعة</span>
+          <div class="dot"></div>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="fivem_exp" />
+          <span class="text">نعم، خبرة بسيطة</span>
+          <div class="dot"></div>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="fivem_exp" />
+          <span class="text">لا، أتعلم</span>
+          <div class="dot"></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label><input class="editable-label" value="رابط أعمالك / GitHub / مشاريع سابقة" /></label>
+      <input type="text" placeholder="https://github.com/..." />
+    </div>
+
+    <div class="field">
+      <label><span class="required">*</span> <input class="editable-label" value="قيّم مستواك في Lua من 1 إلى 10" /></label>
+      <div class="scale-row">
+        <span class="scale-label">ضعيف</span>
+        <div class="scale-options" id="luaScale">
+          <button class="scale-btn" onclick="setScale('luaScale', this, 1)">1</button>
+          <button class="scale-btn" onclick="setScale('luaScale', this, 2)">2</button>
+          <button class="scale-btn" onclick="setScale('luaScale', this, 3)">3</button>
+          <button class="scale-btn" onclick="setScale('luaScale', this, 4)">4</button>
+          <button class="scale-btn" onclick="setScale('luaScale', this, 5)">5</button>
+          <button class="scale-btn" onclick="setScale('luaScale', this, 6)">6</button>
+          <button class="scale-btn" onclick="setScale('luaScale', this, 7)">7</button>
+          <button class="scale-btn" onclick="setScale('luaScale', this, 8)">8</button>
+          <button class="scale-btn" onclick="setScale('luaScale', this, 9)">9</button>
+          <button class="scale-btn" onclick="setScale('luaScale', this, 10)">10</button>
+        </div>
+        <span class="scale-label">محترف</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: أسئلة تقنية (قابلة للتعديل والإضافة) -->
+  <div class="section">
+    <div class="section-title">
+      <div class="icon">🔧</div>
+      <span contenteditable="true" style="outline:none;">الأسئلة التقنية</span>
+    </div>
+
+    <div id="questionsContainer">
+      <!-- Q1 -->
+      <div class="question-card" id="q_1">
+        <div class="question-header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="q-number">1</div>
+            <span style="font-size:13px;color:var(--muted);">سؤال مفتوح</span>
+          </div>
+          <div class="q-controls">
+            <button class="btn-icon" onclick="removeQuestion('q_1')" title="حذف">🗑</button>
+          </div>
+        </div>
+        <input class="q-text-input" type="text" value="اشرح الفرق بين Client-Side و Server-Side في FiveM" placeholder="نص السؤال..." />
+        <textarea style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:14px;outline:none;direction:rtl;margin-top:10px;min-height:90px;resize:vertical;" placeholder="إجابة المتقدم..."></textarea>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-card" id="q_2">
+        <div class="question-header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="q-number">2</div>
+            <span style="font-size:13px;color:var(--muted);">سؤال مفتوح</span>
+          </div>
+          <div class="q-controls">
+            <button class="btn-icon" onclick="removeQuestion('q_2')" title="حذف">🗑</button>
+          </div>
+        </div>
+        <input class="q-text-input" type="text" value="ما هي أكثر الأخطاء شيوعاً عند كتابة سكريبت FiveM وكيف تتعامل معها؟" placeholder="نص السؤال..." />
+        <textarea style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:14px;outline:none;direction:rtl;margin-top:10px;min-height:90px;resize:vertical;" placeholder="إجابة المتقدم..."></textarea>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-card" id="q_3">
+        <div class="question-header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="q-number">3</div>
+            <span style="font-size:13px;color:var(--muted);">سؤال مفتوح</span>
+          </div>
+          <div class="q-controls">
+            <button class="btn-icon" onclick="removeQuestion('q_3')" title="حذف">🗑</button>
+          </div>
+        </div>
+        <input class="q-text-input" type="text" value="صف نظام أو سكريبت قمت ببرمجته من الصفر، وما التحديات التي واجهتها؟" placeholder="نص السؤال..." />
+        <textarea style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:14px;outline:none;direction:rtl;margin-top:10px;min-height:90px;resize:vertical;" placeholder="إجابة المتقدم..."></textarea>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-card" id="q_4">
+        <div class="question-header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="q-number">4</div>
+            <span style="font-size:13px;color:var(--muted);">سؤال مفتوح</span>
+          </div>
+          <div class="q-controls">
+            <button class="btn-icon" onclick="removeQuestion('q_4')" title="حذف">🗑</button>
+          </div>
+        </div>
+        <input class="q-text-input" type="text" value="كيف تضمن أمان السكريبتات وتمنع الاستغلال (Anti-Cheat / Exploit)؟" placeholder="نص السؤال..." />
+        <textarea style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:14px;outline:none;direction:rtl;margin-top:10px;min-height:90px;resize:vertical;" placeholder="إجابة المتقدم..."></textarea>
+      </div>
+    </div>
+
+    <button class="add-question-btn" onclick="addQuestion()">
+      ➕ إضافة سؤال جديد
+    </button>
+  </div>
+
+  <!-- Section 4: الالتزام -->
+  <div class="section">
+    <div class="section-title">
+      <div class="icon">⏰</div>
+      <span contenteditable="true" style="outline:none;">الالتزام والتوقعات</span>
+    </div>
+
+    <div class="field">
+      <label><span class="required">*</span> <input class="editable-label" value="كم ساعة تستطيع تخصيصها أسبوعياً؟" /></label>
+      <div class="options-grid">
+        <label class="option-item">
+          <input type="radio" name="hours" />
+          <span class="text">أقل من 5 ساعات</span>
+          <div class="dot"></div>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="hours" />
+          <span class="text">5 - 10 ساعات</span>
+          <div class="dot"></div>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="hours" />
+          <span class="text">10 - 20 ساعة</span>
+          <div class="dot"></div>
+        </label>
+        <label class="option-item">
+          <input type="radio" name="hours" />
+          <span class="text">+20 ساعة</span>
+          <div class="dot"></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label><span class="required">*</span> <input class="editable-label" value="لماذا تريد الانضمام لهذا السيرفر تحديداً؟" /></label>
+      <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+    </div>
+
+    <div class="field">
+      <label><input class="editable-label" value="هل لديك أي إضافات أو ملاحظات؟" /></label>
+      <textarea placeholder="أي شيء تريد إضافته..." style="min-height:70px;"></textarea>
+    </div>
+  </div>
+
+  <!-- إعدادات الويب هوك -->
+  <div class="section" style="animation-delay:0.5s;">
+    <div class="section-title">
+      <div class="icon">⚙️</div>
+      <span contenteditable="true" style="outline:none;">إعدادات المسؤول</span>
+    </div>
+        <!-- Webhook section -->
+    <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:20px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <span style="font-size:14px;">⚙️</span>
+        <span style="font-size:13px;font-weight:700;color:var(--muted);">إعدادات المسؤول — Discord Webhook</span>
+        <span style="font-size:11px;background:rgba(240,165,0,0.15);color:var(--gold);border:1px solid rgba(240,165,0,0.3);border-radius:4px;padding:2px 8px;">للمسؤول فقط</span>
+      </div>
+      <input type="text" id="webhookUrl" placeholder="https://discord.com/api/webhooks/..." 
+        style="font-size:13px;" 
+        oninput="saveWebhook()" />
+      <p style="font-size:11px;color:var(--muted);margin-top:6px;">
+        أدخل Webhook URL وسيتم إرسال كل التقديمات تلقائياً لقناة الديسكورد
+      </p>
+    </div>
+  </div>
+
+  <!-- Submit -->
+  <div class="submit-section">
+    <button class="submit-btn" onclick="submitForm()">
+      إرسال التقديم 🚀
+    </button>
+    <p style="color:var(--muted);font-size:12px;margin-top:14px;">
+      سيتم مراجعة تقديمك خلال 24-48 ساعة
+    </p>
+  </div>
+
+</div>
+
+<!-- Success Modal -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <div class="check">✓</div>
+    <h3>تم إرسال تقديمك!</h3>
+    <p>شكراً لتقديمك. سيتم مراجعة طلبك من قِبل الفريق وسنتواصل معك قريباً عبر الديسكورد.</p>
+    <button class="modal-close" onclick="closeModal()">حسناً</button>
+  </div>
+</div>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrolled = doc.scrollTop / (doc.scrollHeight - doc.clientHeight) * 100;
+    document.getElementById('progressFill').style.width = scrolled + '%';
+  });
+
+  // Scale selection
+  function setScale(containerId, btn, value) {
+    const container = document.getElementById(containerId);
+    container.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // Question counter
+  let qCount = 4;
+
+  function addQuestion() {
+    qCount++;
+    const id = `q_${qCount}`;
+    const html = `
+      <div class="question-card" id="${id}" style="animation:fadeUp 0.4s ease both;">
+        <div class="question-header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="q-number">${qCount}</div>
+            <span style="font-size:13px;color:var(--muted);">سؤال مفتوح</span>
+          </div>
+          <div class="q-controls">
+            <button class="btn-icon" onclick="removeQuestion('${id}')" title="حذف">🗑</button>
+          </div>
+        </div>
+        <input class="q-text-input" type="text" placeholder="اكتب سؤالك هنا..." />
+        <textarea style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:14px;outline:none;direction:rtl;margin-top:10px;min-height:90px;resize:vertical;" placeholder="إجابة المتقدم..."></textarea>
+      </div>
+    `;
+    document.getElementById('questionsContainer').insertAdjacentHTML('beforeend', html);
+    renumberQuestions();
+  }
+
+  function removeQuestion(id) {
+    const el = document.getElementById(id);
+    if (document.querySelectorAll('.question-card').length <= 1) return;
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(20px)';
+    el.style.transition = 'all 0.3s ease';
+    setTimeout(() => { el.remove(); renumberQuestions(); }, 300);
+  }
+
+  function renumberQuestions() {
+    document.querySelectorAll('.question-card').forEach((card, i) => {
+      card.querySelector('.q-number').textContent = i + 1;
+    });
+  }
+
+  // Copy Discord ID
+  function copyDiscordId() {
+    const val = document.getElementById('discordIdInput').value.trim();
+    if (!val) { alert('أدخل ايدي الديسكورد أولاً'); return; }
+    navigator.clipboard.writeText(val).then(() => {
+      const btn = document.getElementById('copyDiscordBtn');
+      btn.textContent = '✅ تم النسخ!';
+      btn.style.background = 'linear-gradient(135deg,var(--success),#00b248)';
+      setTimeout(() => resetCopyBtn(), 2000);
+    });
+  }
+
+  function resetCopyBtn() {
+    const btn = document.getElementById('copyDiscordBtn');
+    btn.textContent = '📋 نسخ الايدي';
+    btn.style.background = 'linear-gradient(135deg,var(--accent),var(--accent2))';
+  }
+
+  // Save webhook
+  function saveWebhook() {
+    localStorage.setItem('webhookUrl', document.getElementById('webhookUrl').value);
+  }
+
+  window.addEventListener('load', () => {
+    const saved = localStorage.getItem('webhookUrl');
+    if (saved) document.getElementById('webhookUrl').value = saved;
+  });
+
+  // Collect all form data
+  function collectFormData() {
+    const data = {};
+
+    // Personal info inputs
+    const labels = document.querySelectorAll('.editable-label');
+    const inputs = document.querySelectorAll('input[type="text"]:not(.q-text-input):not(.editable-label), input[type="number"], textarea:not([placeholder="إجابة المتقدم..."])');
+    data['ايدي الديسكورد'] = document.getElementById('discordIdInput')?.value || '';
+
+    // Radio selections
+    const radios = ['exp','fivem_exp','hours'];
+    radios.forEach(name => {
+      const checked = document.querySelector(`input[name="${name}"]:checked`);
+      data[name] = checked ? checked.closest('.option-item').querySelector('.text').textContent : 'لم يختر';
+    });
+
+    // Checkboxes
+    const langs = [];
+    document.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+      langs.push(cb.closest('.option-item').querySelector('.text').textContent);
+    });
+    data['اللغات'] = langs.join(', ') || 'لم يختر';
+
+    // Scale
+    const activeScale = document.querySelector('#luaScale .scale-btn.active');
+    data['مستوى Lua'] = activeScale ? activeScale.textContent + '/10' : 'لم يختر';
+
+    // Questions
+    const questions = {};
+    document.querySelectorAll('.question-card').forEach((card, i) => {
+      const q = card.querySelector('.q-text-input')?.value || `سؤال ${i+1}`;
+      const a = card.querySelector('textarea')?.value || '(لا يوجد إجابة)';
+      questions[`س${i+1}: ${q}`] = a || '(لا يوجد إجابة)';
+    });
+    data['الأسئلة التقنية'] = questions;
+
+    // Text inputs (personal section)
+    const personalInputs = document.querySelectorAll('.section:first-of-type input[type="text"], .section:first-of-type input[type="number"]');
+    const personalLabels = ['اسم الديسكورد','اسم اللعبة','العمر','الجنسية'];
+    personalInputs.forEach((inp, i) => {
+      if (personalLabels[i]) data[personalLabels[i]] = inp.value;
+    });
+
+    // GitHub
+    const ghInput = document.querySelector('input[placeholder*="github"]') || document.querySelector('input[placeholder*="GitHub"]');
+    if (ghInput) data['روابط الأعمال'] = ghInput.value;
+
+    // Commitment textareas
+    const commitTextareas = document.querySelectorAll('.section:last-of-type textarea');
+    const commitLabels = ['سبب الانضمام', 'إضافات وملاحظات'];
+    commitTextareas.forEach((ta, i) => {
+      if (commitLabels[i]) data[commitLabels[i]] = ta.value;
+    });
+
+    return data;
+  }
+
+  // Send to Discord webhook
+  async function sendToDiscord(data) {
+    const webhook = document.getElementById('webhookUrl').value.trim();
+    if (!webhook || !webhook.startsWith('https://discord.com/api/webhooks/')) return false;
+
+    const fields = [];
+
+    // Personal fields
+    ['اسم الديسكورد','اسم اللعبة','العمر','الجنسية','ايدي الديسكورد'].forEach(key => {
+      if (data[key]) fields.push({ name: key, value: data[key] || '—', inline: true });
+    });
+
+    fields.push({ name: 'خبرة البرمجة', value: data['exp'] || '—', inline: true });
+    fields.push({ name: 'خبرة FiveM', value: data['fivem_exp'] || '—', inline: true });
+    fields.push({ name: 'اللغات', value: data['اللغات'] || '—', inline: false });
+    fields.push({ name: 'مستوى Lua', value: data['مستوى Lua'] || '—', inline: true });
+    fields.push({ name: 'ساعات أسبوعية', value: data['hours'] || '—', inline: true });
+
+    if (data['الأسئلة التقنية']) {
+      Object.entries(data['الأسئلة التقنية']).forEach(([q, a]) => {
+        fields.push({ name: q, value: a.substring(0, 1024) || '—', inline: false });
+      });
+    }
+
+    if (data['سبب الانضمام']) fields.push({ name: 'سبب الانضمام', value: data['سبب الانضمام'].substring(0,1024) || '—', inline: false });
+
+    const payload = {
+      username: 'نظام التقديمات 🎮',
+      avatar_url: 'https://i.imgur.com/AfFp7pu.png',
+      embeds: [{
+        title: '📋 تقديم جديد — فريق البرمجة',
+        color: 0x00c8ff,
+        fields,
+        footer: { text: 'FiveM Programming Team Application • ' + new Date().toLocaleString('ar-SA') },
+        thumbnail: { url: 'https://i.imgur.com/AfFp7pu.png' }
+      }]
+    };
+
+    const res = await fetch(webhook, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    return res.ok;
+  }
+
+  // Submit
+  async function submitForm() {
+    const data = collectFormData();
+    const webhook = document.getElementById('webhookUrl').value.trim();
+
+    if (webhook) {
+      const btn = document.querySelector('.submit-btn');
+      btn.textContent = '⏳ جاري الإرسال...';
+      btn.disabled = true;
+
+      try {
+        const ok = await sendToDiscord(data);
+        if (ok) {
+          document.getElementById('successModal').classList.add('active');
+        } else {
+          alert('❌ فشل الإرسال، تأكد من صحة Webhook URL');
+        }
+      } catch(e) {
+        alert('❌ خطأ في الإرسال: ' + e.message);
+      }
+
+      btn.textContent = 'إرسال التقديم 🚀';
+      btn.disabled = false;
+    } else {
+      document.getElementById('successModal').classList.add('active');
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('successModal').classList.remove('active');
+  }
+
+  // Checkbox visual fix
+  document.querySelectorAll('.option-item input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', function() {
+      const dot = this.closest('.option-item').querySelector('.dot');
+      if (this.checked) {
+        this.closest('.option-item').style.borderColor = 'var(--accent)';
+        this.closest('.option-item').style.background = 'rgba(0,200,255,0.06)';
+        this.closest('.option-item').style.color = 'var(--accent)';
+        dot.style.background = 'var(--accent)';
+        dot.style.borderColor = 'var(--accent)';
+      } else {
+        this.closest('.option-item').style.borderColor = '';
+        this.closest('.option-item').style.background = '';
+        this.closest('.option-item').style.color = '';
+        dot.style.background = '';
+        dot.style.borderColor = '';
+      }
+    });
+  });
+</script>
+
+<!-- Footer -->
+<div style="text-align:center;padding:40px 20px 30px;position:relative;z-index:1;">
+  <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,255,0.3),rgba(123,47,255,0.3),transparent);margin-bottom:24px;"></div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;">
+    <span style="font-size:18px;">🏙️</span>
+    <span style="font-size:15px;font-weight:700;background:linear-gradient(135deg,#fff,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Nice City</span>
+  </div>
+  <p style="font-size:12px;color:var(--muted);line-height:1.9;">
+    جميع الحقوق محفوظة &copy; <span id="footerYear"></span> &nbsp;|&nbsp;
+    <span style="color:var(--accent);">Nice City</span> &nbsp;&bull;&nbsp;
+    تصميم وبرمجة <span style="color:var(--accent2);font-weight:700;">znx</span>
+  </p>
+  <p style="font-size:11px;color:rgba(107,125,179,0.5);margin-top:6px;">
+    يُمنع نسخ أو إعادة استخدام هذا النموذج دون إذن مسبق
+  </p>
+</div>
+
+<script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
+</body>
+</html>
